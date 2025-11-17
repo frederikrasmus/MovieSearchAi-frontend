@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search - Find din næste film</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header id="header"></header>
+
+        <!-- Main Content -->
+        <main id="main">
+            <!-- AI Search Box (ny placering) -->
+            <div class="ai-search-box">
+                <textarea
+                    id="ai-prompt-input"
+                    placeholder="Beskriv den film du vil se (f.eks. 'En mørk fantasyfilm med romance og action')..."
+                    rows="3"
+                ></textarea>
+                <button id="ai-recommend-btn">Få AI Anbefalinger</button>
+            </div>
+
+            <!-- Search and Filter Section (renderControls() fylder denne) -->
+            <section id="controls"></section>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Henter film...</p>
+            </div>
+
+            <!-- Movies Grid -->
+            <div id="movies-grid" class="movies-grid"></div>
+
+            <!-- Modal for AI Recommendation -->
+            <div id="modal" class="modal hidden">
+                <div class="modal-content">
+                    <button id="close-modal" class="close-btn">&times;</button>
+                    <div id="modal-body"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer id="footer"></footer>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

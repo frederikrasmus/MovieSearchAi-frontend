@@ -1,0 +1,512 @@
+/*
+====================================
+    CSS Indholdsfortegnelse
+====================================
+1.  Global Reset & Variabler
+2.  Generel Layout (#app, body)
+3.  Header Sektion
+4.  Main Content Layout
+5.  Kontrolsektion (Søg, Genre, Visning)
+    - Søgeboks
+    - Genre & Visningsdropdown
+6.  Loading Indikator
+7.  Film Gitter (Movies Grid)
+    - Filmkort
+8.  Modal Vindue (Detaljer & AI)
+    - Lukkeknap
+    - Billeder, Info, Oversigt
+    - AI Anbefaling
+    - AI Loading
+9.  Footer Sektion
+10. Responsive Design
+11. Grid Animationer
+12. AI Søgeboks
+====================================
+*/
+
+/* =========================================================
+   1. Global Reset & Variabler
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #1f1f1f;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent-primary: #e50914;
+  --accent-hover: #f40612;
+  --border-color: #2a2a2a;
+  --rating-gold: #ffd700;
+}
+
+
+/* =========================================================
+   2. Generel Layout (#app, body)
+   ========================================================= */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   3. Header Sektion
+   ========================================================= */
+header {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-primary), #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-content p {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+
+/* =========================================================
+   4. Main Content Layout
+   ========================================================= */
+main {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+
+/* =========================================================
+   5. Kontrolsektion (Søg, Genre, Visning)
+   ========================================================= */
+.controls-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* --- Søgeboks --- */
+.search-box {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.search-box input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* --- Genre & Visningsdropdown --- */
+.genre-select select,
+.view-select select {
+  padding: 0.875rem 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 180px;
+  transition: border-color 0.2s;
+}
+
+.genre-select select:focus,
+.view-select select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.genre-select select option,
+.view-select select option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+
+/* =========================================================
+   6. Loading Indikator
+   ========================================================= */
+.loading {
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   7. Film Gitter (Movies Grid)
+   ========================================================= */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Filmkort --- */
+.movie-card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(229, 9, 20, 0.3);
+}
+
+.movie-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background-color: var(--bg-secondary);
+}
+
+.movie-info {
+  padding: 1rem;
+}
+
+.movie-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.movie-year {
+  color: var(--text-secondary);
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--rating-gold);
+  font-weight: 600;
+}
+
+.movie-rating::before {
+  content: "⭐";
+}
+
+
+/* =========================================================
+   8. Modal Vindue (Detaljer & AI)
+   ========================================================= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: var(--bg-secondary);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+/* --- Lukkeknap --- */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background-color: var(--accent-primary);
+}
+
+/* --- Billeder, Info, Oversigt --- */
+.modal-movie-poster {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.modal-movie-info {
+  padding: 2rem;
+}
+
+.modal-movie-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.modal-movie-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.modal-movie-overview {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* --- AI Anbefaling --- */
+.ai-recommendation {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.ai-recommendation h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent-primary);
+}
+
+.ai-recommendation p {
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* --- AI Loading --- */
+.ai-loading {
+  text-align: center;
+  padding: 1rem;
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   9. Footer Sektion
+   ========================================================= */
+footer {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+
+/* =========================================================
+   10. Responsive Design
+   ========================================================= */
+@media (max-width: 768px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .controls-container {
+    flex-direction: column;
+  }
+
+  .search-box,
+  .genre-select select,
+  .view-select select {
+    width: 100%;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .modal-movie-info {
+    padding: 1.5rem;
+  }
+}
+
+
+/* =========================================================
+   11. Grid Animationer
+   ========================================================= */
+.movies-grid.slide-fade-out {
+  animation: slideFadeOutGrid 0.5s forwards;
+}
+
+@keyframes slideFadeOutGrid {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+.movies-grid.slide-down-in {
+    animation: slideDownInGrid 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes slideDownInGrid {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   12. AI Søgeboks
+   ========================================================= */
+.ai-search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ai-search-box textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s;
+}
+
+.ai-search-box textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.ai-search-box textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.ai-search-box button {
+  padding: 0.875rem 1.5rem;
+  background-color: var(--accent-primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  align-self: flex-end;
+}
+
+.ai-search-box button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
